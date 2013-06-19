@@ -81,7 +81,9 @@ define(['./backtofront'], function(backtofront) {
     register: function() {
       customer.requestAccount(($('agree').checked?$('tos').innerHTML:''), localStorage.email, localStorage.pwd, localStorage.encrSolution, $('solution').value, $('host').value, function(err, result) {
         console.log('register err & result', err, result);
-        if(err) {
+        if(err === 'captcha wrong') {
+          alert("Wrong captcha. Please regenerate & retry...");
+        } else if(err) {
           showError('requestAccount error', JSON.stringify(err));
         } else {
           showDashboard(result);
